@@ -1,4 +1,4 @@
-import MainScreen from '../../pages/main-screen/MainScreen';
+import MainScreen from './pages/main-screen/main-screen';
 
 type AppScreenProps = {
   offerCardNumber: number;

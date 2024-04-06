@@ -8,7 +8,6 @@ type OfferCardListProps = {
 
 export function OffersList({ offers }: OfferCardListProps) {
   const [selectedOffer, setSelectedOffer] = useState(null);
-  selectedOffer; //eslint ругается :(
   return (
     <div className="cities__places-list places__list tabs__content">
       {

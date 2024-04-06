@@ -1,11 +1,12 @@
-import OfferCard from '../../components/offer-card/OfferCard';
+import { OffersList } from '../../components/offers-list/offer-card-list';
+import { Offers } from '../../types/offers';
 
 type MainScreenProps = {
-  offerCardNumber: number;
+  offers: Offers;
 };
 
 export default function MainScreen({
-  offerCardNumber,
+  offers,
 }: MainScreenProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
@@ -89,7 +90,7 @@ export default function MainScreen({
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in Amsterdam</b>
+              <b className="places__found">{offers.length} places to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -116,9 +117,7 @@ export default function MainScreen({
                   </li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                {Array(offerCardNumber).fill(<OfferCard />)}
-              </div>
+              <OffersList offers={offers} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map" />

@@ -1,5 +1,5 @@
-import { OfferType } from "../const";
-import { Offers } from "../types/offers";
+import { OfferType } from '../const';
+import { Offers } from '../types/offers';
 
 export const offers: Offers = [
   {
@@ -24,22 +24,19 @@ export const offers: Offers = [
       'Cabel TV',
       'Fridge',
     ],
-    photos: [
-      'img/apartment-01.jpg',
-      'img/apartment-02.jpg',
-    ],
+    photos: ['img/apartment-01.jpg', 'img/apartment-02.jpg'],
     isFavourite: true,
     reviews: [
       {
-      date: 'April 2019',
+        date: 'April 2019',
         text: 'A quiet cozy and picturesque that hides behind a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
         rating: 4,
         user: {
           name: 'Max',
           photo: 'img/avatar-max.jpg',
-        }
-      }
-    ]
+        },
+      },
+    ],
   },
 
   {
@@ -64,22 +61,19 @@ export const offers: Offers = [
       'Cabel TV',
       'Fridge',
     ],
-    photos: [
-      'img/room.jpg',
-      'img/room-small.jpg',
-    ],
+    photos: ['img/room.jpg', 'img/room-small.jpg'],
     isFavourite: true,
     reviews: [
       {
-      date: 'April 2019',
+        date: 'April 2019',
         text: 'A quiet cozy and picturesque that hides behind a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
         rating: 4,
         user: {
           name: 'Max',
           photo: 'img/avatar-max.jpg',
-        }
-      }
-    ]
+        },
+      },
+    ],
   },
 
   {
@@ -104,21 +98,19 @@ export const offers: Offers = [
       'Cabel TV',
       'Fridge',
     ],
-    photos: [
-      'img/apartment-03.jpg',
-    ],
+    photos: ['img/apartment-03.jpg'],
     isFavourite: false,
     reviews: [
       {
-      date: 'April 2019',
+        date: 'April 2019',
         text: 'A quiet cozy and picturesque that hides behind a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
         rating: 4,
         user: {
           name: 'Max',
           photo: 'img/avatar-max.jpg',
-        }
-      }
-    ]
+        },
+      },
+    ],
   },
 
   {
@@ -141,21 +133,18 @@ export const offers: Offers = [
       'Kitchen',
       'Dishwasher',
     ],
-    photos: [
-      'img/apartment-small-03.jpg',
-      'img/apartment-small-04.jpg',
-    ],
+    photos: ['img/apartment-small-03.jpg', 'img/apartment-small-04.jpg'],
     isFavourite: false,
     reviews: [
       {
-      date: 'April 2019',
+        date: 'April 2019',
         text: 'A quiet cozy and picturesque that hides behind a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
         rating: 4,
         user: {
           name: 'Max',
           photo: 'img/avatar-max.jpg',
-        }
-      }
-    ]
+        },
+      },
+    ],
   },
-]
+];

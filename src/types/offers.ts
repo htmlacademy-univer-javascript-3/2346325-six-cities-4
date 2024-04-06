@@ -1,5 +1,5 @@
-import { OfferType } from "../const";
-import { Review } from "./reviews";
+import { OfferType } from '../const';
+import { Review } from './reviews';
 
 export type Offer = {
   id: number;
@@ -15,6 +15,6 @@ export type Offer = {
   photos: string[];
   isFavourite: boolean;
   reviews: Review[];
-}
+};
 
 export type Offers = Offer[];

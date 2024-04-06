@@ -1,12 +1,13 @@
-import { Offers } from "../../types/offers";
-import { FavouriteCardList } from "../../components/favorite-card-list/favorite-card-list";
-
+import { Offers } from '../../types/offers';
+import { FavouriteCardList } from '../../components/favorite-card-list/favorite-card-list';
 
 type FavoritesScreenProps = {
   offers: Offers;
-}
+};
 
-export default function FavoritesScreen({offers}:  FavoritesScreenProps): JSX.Element {
+export default function FavoritesScreen({
+  offers,
+}: FavoritesScreenProps): JSX.Element {
   return (
     <div className="page">
       <header className="header">
@@ -60,7 +61,7 @@ export default function FavoritesScreen({offers}:  FavoritesScreenProps): JSX.El
                     </a>
                   </div>
                 </div>
-                <FavouriteCardList offers={offers}/>
+                <FavouriteCardList offers={offers} />
               </li>
               <li className="favorites__locations-items">
                 <div className="favorites__locations locations locations--current">

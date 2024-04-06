@@ -7,22 +7,21 @@ export function ReviewForm(): JSX.Element {
   });
 
   const handleRatingChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    setFormData({...formData, rating: Number(evt.target.value)});
+    setFormData({ ...formData, rating: Number(evt.target.value) });
   };
   const handleTextChange = (evt: ChangeEvent<HTMLTextAreaElement>) => {
-    setFormData({...formData, text: evt.target.value});
+    setFormData({ ...formData, text: evt.target.value });
   };
 
   function isFormValid(): boolean {
     if (formData.text.length < 50 || formData.text.length > 300) {
-      return false
+      return false;
     }
 
     if (formData.rating < 1) {
-      return false
+      return false;
     }
 
-    console.log(formData)
     return true;
   }
 

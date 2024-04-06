@@ -1,18 +1,28 @@
-import { Offer } from "../../types/offers";
-import { Link } from "react-router-dom";
+import { Offer } from '../../types/offers';
+import { Link } from 'react-router-dom';
 
 type OfferCardProps = {
   offer: Offer;
   setSelectedOffer: CallableFunction;
-}
+};
 
-export default function OfferCard( {offer, setSelectedOffer}: OfferCardProps): JSX.Element {
+export default function OfferCard({
+  offer,
+  setSelectedOffer,
+}: OfferCardProps): JSX.Element {
   return (
-    <article className="cities__card place-card"
-        onMouseOver={() => {setSelectedOffer(offer.id);
+    <article
+      className="cities__card place-card"
+      onMouseOver={() => {
+        setSelectedOffer(offer.id);
       }}
     >
-      {offer.isPremium && <div className="place-card__mark"> <span>Premium</span> </div>}
+      {offer.isPremium && (
+        <div className="place-card__mark">
+          {' '}
+          <span>Premium</span>{' '}
+        </div>
+      )}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={`/offer/${offer.id}`}>
           <img
@@ -39,14 +49,14 @@ export default function OfferCard( {offer, setSelectedOffer}: OfferCardProps): J
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${offer.rating / 5 * 100}%` }} />
+            <span style={{ width: `${(offer.rating / 5) * 100}%` }} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
           <Link to={`/offer/${offer.id}`}>{offer.name}</Link>
         </h2>
-        <p className="place-card__type">{ offer.type }</p>
+        <p className="place-card__type">{offer.type}</p>
       </div>
     </article>
   );

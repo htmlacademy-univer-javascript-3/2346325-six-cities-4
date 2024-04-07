@@ -3,18 +3,16 @@ import { Link } from 'react-router-dom';
 
 type OfferCardProps = {
   offer: Offer;
-  onMouseOver: (id:number) => void;
+  onMouseOver: (id: number) => void;
 };
 
 export default function OfferCard({
   offer,
-  onMouseOver
+  onMouseOver,
 }: OfferCardProps): JSX.Element {
   return (
     <article
-      onMouseOver={(evt) =>
-        onMouseOver(offer.id)
-      }
+      onMouseOver={() => onMouseOver(offer.id)}
       className="cities__card place-card"
     >
       {offer.isPremium && (

@@ -18,8 +18,8 @@ export type Offer = {
   host: {
     name: string;
     avatarUrl: string;
-    isPro: boolean
-  }
+    isPro: boolean;
+  };
   images: string[];
   previewImage: string;
   maxAdults: number;

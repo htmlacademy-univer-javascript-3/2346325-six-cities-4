@@ -132,9 +132,7 @@ export default function OfferScreen({ offers }: OfferProps): JSX.Element {
                   <span className="offer__user-status">Pro</span>
                 </div>
                 <div className="offer__description">
-                  <p className="offer__text">
-                    {offer.description}
-                  </p>
+                  <p className="offer__text">{offer.description}</p>
                 </div>
               </div>
               <section className="offer__reviews reviews">

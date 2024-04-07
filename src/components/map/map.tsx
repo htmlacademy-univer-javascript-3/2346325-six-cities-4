@@ -11,7 +11,11 @@ type MapProps = {
   selectedPoint?: Location;
 };
 
-export default function Map({ city, points, selectedPoint }: MapProps): JSX.Element {
+export default function Map({
+  city,
+  points,
+  selectedPoint,
+}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 

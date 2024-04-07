@@ -1,9 +1,12 @@
 import { useState, MutableRefObject, useRef, useEffect } from 'react';
 import { City } from '../types/city';
 import leaflet from 'leaflet';
-import {Map} from 'leaflet';
+import { Map } from 'leaflet';
 
-export default function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: City) {
+export default function useMap(
+  mapRef: MutableRefObject<HTMLElement | null>,
+  city: City
+) {
   const [map, setMap] = useState<Map | null>(null);
   const isReneredRef = useRef(false);
 

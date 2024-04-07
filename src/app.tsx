@@ -16,17 +16,17 @@ export default function App({ offers }: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path={AppRoute.Root}
-          element={<MainScreen offers={offers} />}
-        />
+        <Route path={AppRoute.Root} element={<MainScreen offers={offers} />} />
         <Route path={AppRoute.Login} element={<LoginScreen />} />
-        <Route path={AppRoute.Offer} element={<OfferScreen offers={offers}/>} />
+        <Route
+          path={AppRoute.Offer}
+          element={<OfferScreen offers={offers} />}
+        />
         <Route
           path={AppRoute.Favourites}
           element={
             <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-              <FavoritesScreen offers={offers}/>
+              <FavoritesScreen offers={offers} />
             </PrivateRoute>
           }
         />

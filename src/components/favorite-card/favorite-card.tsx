@@ -10,7 +10,7 @@ export default function FavoriteCard({offer}: FavoriteCardProps): JSX.Element {
     <article className="favorites__card place-card">
       <div className="favorites__image-wrapper place-card__image-wrapper">
         <Link to={`/offer/${offer.id}`}>
-          <img className="place-card__image" src={offer.photos[0]} width="150" height="110" alt="Place image" />
+          <img className="place-card__image" src={offer.previewImage} width="150" height="110" alt="Place image" />
         </Link>
       </div>
       <div className="favorites__card-info place-card__info">
@@ -33,7 +33,7 @@ export default function FavoriteCard({offer}: FavoriteCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/${offer.id}`}>{offer.name}</Link>
+          <Link to={`/offer/${offer.id}`}>{offer.tittle}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>

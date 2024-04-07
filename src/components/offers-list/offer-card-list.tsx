@@ -1,4 +1,4 @@
-import { Offers } from '../../types/offers';
+import { Offers, Offer } from '../../types/offers';
 import OfferCard from '../offer-card/offer-card';
 import { useState } from 'react';
 
@@ -7,7 +7,15 @@ type OfferCardListProps = {
 };
 
 export function OffersList({ offers }: OfferCardListProps) {
-  const [selectedOffer, setSelectedOffer] = useState(null);
+  const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
+
+  const handleMouseOver = (id: number) => {
+    const activeOffer = offers.find((offer) => offer.id === id);
+    if (activeOffer !== undefined && activeOffer !== selectedOffer) {
+      setSelectedOffer(activeOffer);
+    }
+  };
+
   return (
     <div className="cities__places-list places__list tabs__content">
       {
@@ -15,7 +23,7 @@ export function OffersList({ offers }: OfferCardListProps) {
           <OfferCard
             offer = {offer}
             key = {offer.id}
-            setSelectedOffer = {setSelectedOffer}
+            onMouseOver={handleMouseOver}
           />
         ))
       }

@@ -44,7 +44,7 @@ export default function Map({
               icon:
                 selectedPoint &&
                 point.latitude === selectedPoint.latitude &&
-                point.longitude == selectedPoint.longitude
+                point.longitude === selectedPoint.longitude
                   ? currentMarker
                   : defaultMarker,
             }
@@ -52,7 +52,7 @@ export default function Map({
           .addTo(map);
       });
     }
-  }, [map, points, selectedPoint]);
+  }, [map, points, selectedPoint, currentMarker, defaultMarker]);
 
   return <div style={{ height: '100%' }} ref={mapRef}></div>;
 }

@@ -1,19 +1,22 @@
 import { Offer } from '../../types/offers';
 import { Link } from 'react-router-dom';
+import { CardType } from '../../const';
 
 type OfferCardProps = {
   offer: Offer;
   onMouseOver: (id: number) => void;
+  cardType: CardType;
 };
 
 export default function OfferCard({
   offer,
   onMouseOver,
+  cardType,
 }: OfferCardProps): JSX.Element {
   return (
     <article
       onMouseOver={() => onMouseOver(offer.id)}
-      className="cities__card place-card"
+      className={`${cardType}__card place-card`}
     >
       {offer.isPremium && (
         <div className="place-card__mark">
@@ -21,7 +24,7 @@ export default function OfferCard({
           <span>Premium</span>{' '}
         </div>
       )}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={`${cardType}____image-wrapper place-card__image-wrapper`}>
         <Link to={`/offer/${offer.id}`}>
           <img
             className="place-card__image"

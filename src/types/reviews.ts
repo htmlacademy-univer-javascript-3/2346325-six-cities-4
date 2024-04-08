@@ -1,11 +1,17 @@
 type User = {
   name: string;
-  photo: string;
+  avatarUrl: string;
+  isPro: boolean;
+  email: string;
+  token: string;
 };
 
 export type Review = {
+  id: number;
   date: string;
-  text: string;
+  comment: string;
   rating: number;
   user: User;
 };
+
+export type Reviews = Review[];

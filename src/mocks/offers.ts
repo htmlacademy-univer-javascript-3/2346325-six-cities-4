@@ -1,5 +1,6 @@
 import { OfferType } from '../const';
 import { Offers } from '../types/offers';
+import { reviews } from './reviews';
 
 export const offers: Offers = [
   {
@@ -26,17 +27,7 @@ export const offers: Offers = [
     ],
     images: ['img/apartment-01.jpg', 'img/apartment-02.jpg'],
     isFavourite: true,
-    reviews: [
-      {
-        date: 'April 2019',
-        text: 'A quiet cozy and picturesque that hides behind a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
-        rating: 4,
-        user: {
-          name: 'Max',
-          photo: 'img/avatar-max.jpg',
-        },
-      },
-    ],
+    reviews: [reviews[0], reviews[1]],
     previewImage: 'img/apartment-01.jpg',
     city: {
       name: 'Amsterdam',
@@ -82,17 +73,7 @@ export const offers: Offers = [
     ],
     images: ['img/room.jpg', 'img/room-small.jpg'],
     isFavourite: true,
-    reviews: [
-      {
-        date: 'April 2019',
-        text: 'A quiet cozy and picturesque that hides behind a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
-        rating: 4,
-        user: {
-          name: 'Max',
-          photo: 'img/avatar-max.jpg',
-        },
-      },
-    ],
+    reviews: [reviews[3], reviews[2]],
     previewImage: 'img/room.jpg',
     city: {
       name: 'Amsterdam',
@@ -138,17 +119,7 @@ export const offers: Offers = [
     ],
     images: ['img/apartment-03.jpg'],
     isFavourite: false,
-    reviews: [
-      {
-        date: 'April 2019',
-        text: 'A quiet cozy and picturesque that hides behind a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
-        rating: 4,
-        user: {
-          name: 'Max',
-          photo: 'img/avatar-max.jpg',
-        },
-      },
-    ],
+    reviews: [reviews[4], reviews[5], reviews[6]],
     previewImage: 'img/apartment-03.jpg',
     city: {
       name: 'Amsterdam',
@@ -192,17 +163,7 @@ export const offers: Offers = [
     ],
     images: ['img/apartment-small-03.jpg', 'img/apartment-small-04.jpg'],
     isFavourite: false,
-    reviews: [
-      {
-        date: 'April 2019',
-        text: 'A quiet cozy and picturesque that hides behind a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
-        rating: 4,
-        user: {
-          name: 'Max',
-          photo: 'img/avatar-max.jpg',
-        },
-      },
-    ],
+    reviews: [reviews[7]],
     previewImage: 'img/apartment-small-03.jpg',
     city: {
       name: 'Amsterdam',

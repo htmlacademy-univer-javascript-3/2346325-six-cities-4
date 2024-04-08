@@ -2,8 +2,8 @@ type User = {
   name: string;
   avatarUrl: string;
   isPro: boolean;
-  email: String;
-  token: String;
+  email: string;
+  token: string;
 };
 
 export type Review = {

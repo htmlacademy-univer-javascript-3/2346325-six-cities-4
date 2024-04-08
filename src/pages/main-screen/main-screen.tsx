@@ -10,7 +10,9 @@ type MainScreenProps = {
 };
 
 export default function MainScreen({ offers }: MainScreenProps): JSX.Element {
-  const [selectedPoint, setSelectedPoint] = useState<Location | undefined>(undefined);
+  const [selectedPoint, setSelectedPoint] = useState<Location | undefined>(
+    undefined
+  );
 
   return (
     <div className="page page--gray page--main">
@@ -124,7 +126,11 @@ export default function MainScreen({ offers }: MainScreenProps): JSX.Element {
                 </ul>
               </form>
               <div className={`cities__places-list places__list tabs__content`}>
-                <OffersList offers={offers} setSelectedPoint={setSelectedPoint} cardType={CardType.Cities} />
+                <OffersList
+                  offers={offers}
+                  setSelectedPoint={setSelectedPoint}
+                  cardType={CardType.Cities}
+                />
               </div>
             </section>
             <div className="cities__right-section">

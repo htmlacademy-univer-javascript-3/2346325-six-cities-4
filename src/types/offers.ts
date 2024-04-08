@@ -4,7 +4,7 @@ import { Location, City } from './city';
 
 export type Offer = {
   id: number;
-  tittle: string;
+  title: string;
   type: OfferType;
   price: number;
   city: City;

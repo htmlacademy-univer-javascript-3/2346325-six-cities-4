@@ -1,7 +1,7 @@
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import MainScreen from './pages/main-screen/main-screen';
 import { AppRoute, AuthorizationStatus } from './const';
-import FavoritesScreen from './pages/favourites-screen/favourites-screen';
+import FavoritesScreen from './pages/favorites-screen/favorites-screen';
 import LoginScreen from './pages/login-screen/login-screen';
 import OfferScreen from './pages/offer-screen/offer-screen';
 import PrivateRoute from './components/private-route/private-route';
@@ -23,7 +23,7 @@ export default function App({ offers }: AppScreenProps): JSX.Element {
           element={<OfferScreen offers={offers} />}
         />
         <Route
-          path={AppRoute.Favourites}
+          path={AppRoute.Favorites}
           element={
             <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
               <FavoritesScreen offers={offers} />

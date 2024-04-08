@@ -74,7 +74,7 @@ export default function OfferScreen({ offers }: OfferProps): JSX.Element {
                 </div>
               )}
               <div className="offer__name-wrapper">
-                <h1 className="offer__name">{offer.tittle}</h1>
+                <h1 className="offer__name">{offer.title}</h1>
                 <button className="offer__bookmark-button button" type="button">
                   <svg className="offer__bookmark-icon" width={31} height={33}>
                     <use xlinkHref="#icon-bookmark" />

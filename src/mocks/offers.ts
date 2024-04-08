@@ -4,7 +4,7 @@ import { Offers } from '../types/offers';
 export const offers: Offers = [
   {
     id: 1,
-    tittle: 'Beautiful & luxurious studio at great location',
+    title: 'Beautiful & luxurious studio at great location',
     description: 'Beautiful & luxurious studio at great location',
     isPremium: true,
     type: OfferType.Apartment,
@@ -60,7 +60,7 @@ export const offers: Offers = [
 
   {
     id: 2,
-    tittle: 'Wood and stone place',
+    title: 'Wood and stone place',
     description: 'Wood and stone place',
     isPremium: false,
     type: OfferType.Room,
@@ -116,7 +116,7 @@ export const offers: Offers = [
 
   {
     id: 3,
-    tittle: 'Canal View Prinsengracht',
+    title: 'Canal View Prinsengracht',
     description: 'Canal View Prinsengracht',
     isPremium: false,
     type: OfferType.Apartment,
@@ -172,7 +172,7 @@ export const offers: Offers = [
 
   {
     id: 4,
-    tittle: 'Nice, cozy, warm big bed apartment',
+    title: 'Nice, cozy, warm big bed apartment',
     description: 'Nice, cozy, warm big bed apartment',
     isPremium: true,
     type: OfferType.Apartment,

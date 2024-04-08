@@ -1,12 +1,16 @@
 import { OffersList } from '../../components/offers-list/offer-card-list';
 import { Offers } from '../../types/offers';
 import Map from '../../components/map/map';
+import { useState } from 'react';
+import { Location } from '../../types/city';
 
 type MainScreenProps = {
   offers: Offers;
 };
 
 export default function MainScreen({ offers }: MainScreenProps): JSX.Element {
+  const [selectedPoint, setSelectedPoint] = useState<Location | undefined>(undefined);
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -118,13 +122,14 @@ export default function MainScreen({ offers }: MainScreenProps): JSX.Element {
                   </li>
                 </ul>
               </form>
-              <OffersList offers={offers} />
+              <OffersList offers={offers} setSelectedPoint={setSelectedPoint} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
                 <Map
                   points={offers.map((offer) => offer.location)}
                   city={offers[0].city}
+                  selectedPoint={selectedPoint}
                 />
               </section>
             </div>

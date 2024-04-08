@@ -1,19 +1,28 @@
 import { OfferType } from '../const';
 import { Review } from './reviews';
+import { Location, City } from './city';
 
 export type Offer = {
   id: number;
-  name: string;
-  description: string;
-  isPremium: boolean;
+  title: string;
   type: OfferType;
-  rating: number;
-  bedrooms: number;
-  maxGuests: number;
   price: number;
-  content: string[];
-  photos: string[];
+  city: City;
+  location: Location;
   isFavourite: boolean;
+  isPremium: boolean;
+  rating: number;
+  description: string;
+  bedrooms: number;
+  goods: string[];
+  host: {
+    name: string;
+    avatarUrl: string;
+    isPro: boolean;
+  };
+  images: string[];
+  previewImage: string;
+  maxAdults: number;
   reviews: Review[];
 };
 

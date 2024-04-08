@@ -1,5 +1,5 @@
+import FavoriteCard from '../../components/favorite-card/favorite-card';
 import { Offers } from '../../types/offers';
-import { FavouriteCardList } from '../../components/favorite-card-list/favorite-card-list';
 
 type FavoritesScreenProps = {
   offers: Offers;
@@ -61,7 +61,11 @@ export default function FavoritesScreen({
                     </a>
                   </div>
                 </div>
-                <FavouriteCardList offers={offers} />
+                <div className="favorites__places">
+                  {offers.map((offer) => (
+                    <FavoriteCard offer={offer} key={offer.id} />
+                  ))}
+                </div>
               </li>
               <li className="favorites__locations-items">
                 <div className="favorites__locations locations locations--current">

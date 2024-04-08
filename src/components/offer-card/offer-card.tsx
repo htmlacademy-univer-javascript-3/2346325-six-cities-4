@@ -3,19 +3,17 @@ import { Link } from 'react-router-dom';
 
 type OfferCardProps = {
   offer: Offer;
-  setSelectedOffer: CallableFunction;
+  onMouseOver: (id: number) => void;
 };
 
 export default function OfferCard({
   offer,
-  setSelectedOffer,
+  onMouseOver,
 }: OfferCardProps): JSX.Element {
   return (
     <article
+      onMouseOver={() => onMouseOver(offer.id)}
       className="cities__card place-card"
-      onMouseOver={() => {
-        setSelectedOffer(offer.id);
-      }}
     >
       {offer.isPremium && (
         <div className="place-card__mark">
@@ -27,7 +25,7 @@ export default function OfferCard({
         <Link to={`/offer/${offer.id}`}>
           <img
             className="place-card__image"
-            src={offer.photos[0]}
+            src={offer.previewImage}
             width={260}
             height={200}
             alt="Place image"
@@ -54,7 +52,7 @@ export default function OfferCard({
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/${offer.id}`}>{offer.name}</Link>
+          <Link to={`/offer/${offer.id}`}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>

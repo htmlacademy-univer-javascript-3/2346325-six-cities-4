@@ -1,24 +1,30 @@
-import { Offers } from '../../types/offers';
+import { Offers, Offer } from '../../types/offers';
 import OfferCard from '../offer-card/offer-card';
 import { useState } from 'react';
+import { Location } from '../../types/city';
 
 type OfferCardListProps = {
   offers: Offers;
+  setSelectedPoint: React.Dispatch<React.SetStateAction<Location | undefined>>;
 };
 
-export function OffersList({ offers }: OfferCardListProps) {
-  const [selectedOffer, setSelectedOffer] = useState(null);
+
+export function OffersList({ offers, setSelectedPoint }: OfferCardListProps) {
+  const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
+
+  const handleMouseOver = (id: number) => {
+    const activeOffer = offers.find((offer) => offer.id === id);
+    if (activeOffer !== undefined && activeOffer !== selectedOffer) {
+      setSelectedOffer(activeOffer);
+      setSelectedPoint(activeOffer.location);
+    }
+  };
+
   return (
     <div className="cities__places-list places__list tabs__content">
-      {
-        offers.map((offer) => (
-          <OfferCard
-            offer = {offer}
-            key = {offer.id}
-            setSelectedOffer = {setSelectedOffer}
-          />
-        ))
-      }
+      {offers.map((offer) => (
+        <OfferCard offer={offer} key={offer.id} onMouseOver={handleMouseOver} />
+      ))}
     </div>
   );
 }

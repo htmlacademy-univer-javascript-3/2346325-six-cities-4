@@ -59,7 +59,7 @@ export default function OfferScreen({ offers }: OfferProps): JSX.Element {
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              {offer.photos.map((src, index) => (
+              {offer.images.map((src, index) => (
                 <div className="offer__image-wrapper" key={src + String(index)}>
                   <img className="offer__image" src={src} alt="Photo studio" />
                 </div>
@@ -74,7 +74,7 @@ export default function OfferScreen({ offers }: OfferProps): JSX.Element {
                 </div>
               )}
               <div className="offer__name-wrapper">
-                <h1 className="offer__name">{offer.name}</h1>
+                <h1 className="offer__name">{offer.title}</h1>
                 <button className="offer__bookmark-button button" type="button">
                   <svg className="offer__bookmark-icon" width={31} height={33}>
                     <use xlinkHref="#icon-bookmark" />
@@ -99,7 +99,7 @@ export default function OfferScreen({ offers }: OfferProps): JSX.Element {
                   {offer.bedrooms} Bedrooms
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                  Max {offer.maxGuests} adults
+                  Max {offer.maxAdults} adults
                 </li>
               </ul>
               <div className="offer__price">
@@ -109,7 +109,7 @@ export default function OfferScreen({ offers }: OfferProps): JSX.Element {
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 <ul className="offer__inside-list">
-                  {offer.content.map((item) => (
+                  {offer.goods.map((item) => (
                     <li className="offer__inside-item" key={item}>
                       {item}
                     </li>
@@ -132,9 +132,7 @@ export default function OfferScreen({ offers }: OfferProps): JSX.Element {
                   <span className="offer__user-status">Pro</span>
                 </div>
                 <div className="offer__description">
-                  <p className="offer__text">
-                    {offer.description}
-                  </p>
+                  <p className="offer__text">{offer.description}</p>
                 </div>
               </div>
               <section className="offer__reviews reviews">

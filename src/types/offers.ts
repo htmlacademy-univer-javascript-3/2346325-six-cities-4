@@ -1,5 +1,5 @@
 import { OfferType } from '../const';
-import { Review } from './reviews';
+import { Reviews } from './reviews';
 import { Location, City } from './city';
 
 export type Offer = {
@@ -23,7 +23,7 @@ export type Offer = {
   images: string[];
   previewImage: string;
   maxAdults: number;
-  reviews: Review[];
+  reviews: Reviews;
 };
 
 export type Offers = Offer[];

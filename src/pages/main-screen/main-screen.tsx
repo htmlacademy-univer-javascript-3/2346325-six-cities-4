@@ -3,6 +3,7 @@ import { Offers } from '../../types/offers';
 import Map from '../../components/map/map';
 import { useState } from 'react';
 import { Location } from '../../types/city';
+import { CardType } from '../../const';
 
 type MainScreenProps = {
   offers: Offers;
@@ -122,7 +123,9 @@ export default function MainScreen({ offers }: MainScreenProps): JSX.Element {
                   </li>
                 </ul>
               </form>
-              <OffersList offers={offers} setSelectedPoint={setSelectedPoint} />
+              <div className={`cities__places-list places__list tabs__content`}>
+                <OffersList offers={offers} setSelectedPoint={setSelectedPoint} cardType={CardType.Cities} />
+              </div>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">

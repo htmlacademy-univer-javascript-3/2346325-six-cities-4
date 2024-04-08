@@ -17,3 +17,8 @@ export enum OfferType {
   House = 'House',
   Hotel = 'Hotel',
 }
+
+export enum CardType {
+  NearPlaces = 'near-places',
+  Cities = 'cities'
+}

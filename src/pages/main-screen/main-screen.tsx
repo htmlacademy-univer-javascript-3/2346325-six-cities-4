@@ -125,7 +125,7 @@ export default function MainScreen({ offers }: MainScreenProps): JSX.Element {
                   </li>
                 </ul>
               </form>
-              <div className={`cities__places-list places__list tabs__content`}>
+              <div className='cities__places-list places__list tabs__content'>
                 <OffersList
                   offers={offers}
                   setSelectedPoint={setSelectedPoint}

@@ -26,7 +26,7 @@ export const offers: Offers = [
       'Fridge',
     ],
     images: ['img/apartment-01.jpg', 'img/apartment-02.jpg'],
-    isFavourite: true,
+    isFavorite: true,
     reviews: [reviews[0], reviews[1]],
     previewImage: 'img/apartment-01.jpg',
     city: {
@@ -72,7 +72,7 @@ export const offers: Offers = [
       'Fridge',
     ],
     images: ['img/room.jpg', 'img/room-small.jpg'],
-    isFavourite: true,
+    isFavorite: true,
     reviews: [reviews[3], reviews[2]],
     previewImage: 'img/room.jpg',
     city: {
@@ -118,7 +118,7 @@ export const offers: Offers = [
       'Fridge',
     ],
     images: ['img/apartment-03.jpg'],
-    isFavourite: false,
+    isFavorite: false,
     reviews: [reviews[4], reviews[5], reviews[6]],
     previewImage: 'img/apartment-03.jpg',
     city: {
@@ -162,7 +162,7 @@ export const offers: Offers = [
       'Dishwasher',
     ],
     images: ['img/apartment-small-03.jpg', 'img/apartment-small-04.jpg'],
-    isFavourite: false,
+    isFavorite: false,
     reviews: [reviews[7]],
     previewImage: 'img/apartment-small-03.jpg',
     city: {

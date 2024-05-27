@@ -1,20 +1,36 @@
+import HeaderLogo from '../../components/header-logo/header-logo';
+import { Link, useNavigate } from 'react-router-dom';
+import { FormEvent, useRef } from 'react';
+import { useAppDispatch } from '../../hooks';
+import { loginAction } from '../../store/api-actions';
+
 export default function LoginScreen(): JSX.Element {
+  const loginRef = useRef<HTMLInputElement | null>(null);
+  const passwordRef = useRef<HTMLInputElement | null>(null);
+
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    if (loginRef.current !== null && passwordRef.current !== null) {
+      dispatch(
+        loginAction({
+          login: loginRef.current.value,
+          password: passwordRef.current.value,
+        })
+      );
+    }
+    navigate('/');
+  };
+
   return (
     <div className="page page--gray page--login">
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
-            <div className="header__left">
-              <a className="header__logo-link" href="main.html">
-                <img
-                  className="header__logo"
-                  src="img/logo.svg"
-                  alt="6 cities logo"
-                  width={81}
-                  height={41}
-                />
-              </a>
-            </div>
+            <HeaderLogo />
           </div>
         </div>
       </header>
@@ -22,7 +38,7 @@ export default function LoginScreen(): JSX.Element {
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <form className="login__form form" action="#" method="post">
+            <form className="login__form form" onSubmit={handleSubmit}>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input
@@ -31,6 +47,7 @@ export default function LoginScreen(): JSX.Element {
                   name="email"
                   placeholder="Email"
                   required
+                  ref={loginRef}
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
@@ -41,6 +58,7 @@ export default function LoginScreen(): JSX.Element {
                   name="password"
                   placeholder="Password"
                   required
+                  ref={passwordRef}
                 />
               </div>
               <button
@@ -53,9 +71,9 @@ export default function LoginScreen(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="#">
+              <Link className="locations__item-link" to="#todo">
                 <span>Amsterdam</span>
-              </a>
+              </Link>
             </div>
           </section>
         </div>

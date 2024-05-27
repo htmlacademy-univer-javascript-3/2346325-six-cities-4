@@ -9,7 +9,7 @@ export type Offer = {
   price: number;
   city: City;
   location: Location;
-  isFavourite: boolean;
+  isFavorite: boolean;
   isPremium: boolean;
   rating: number;
   description: string;

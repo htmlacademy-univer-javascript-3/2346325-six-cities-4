@@ -19,10 +19,10 @@ export function CitiesElement({ city, onCityChange }: CitiesElementProps) {
         className={`locations__item-link
         tabs__item
         ${
-          useAppSelector((state) => state.city) === city
-            ? 'tabs__item--active'
-            : ''
-        }`}
+    useAppSelector((state) => state.city) === city
+      ? 'tabs__item--active'
+      : ''
+    }`}
         href="#"
       >
         <span>{city.name}</span>

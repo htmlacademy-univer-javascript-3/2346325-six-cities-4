@@ -2,6 +2,12 @@ import { OfferType } from '../const';
 import { Reviews } from './reviews';
 import { Location, City } from './city';
 
+export type OfferPage = {
+  offer: Offer | undefined;
+  nearOffers: Offers;
+  reviews: Reviews;
+}
+
 export type Offer = {
   id: number;
   title: string;

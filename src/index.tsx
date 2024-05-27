@@ -5,14 +5,14 @@ import App from './app';
 import { store } from './store';
 import { Provider } from 'react-redux';
 import { loadOffers } from './store/api-actions';
-import {checkAuthAction} from './store/api-actions';
+import {checkAuth} from './store/api-actions';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
 store.dispatch(loadOffers());
-store.dispatch(checkAuthAction());
+store.dispatch(checkAuth());
 
 root.render(
   <React.StrictMode>

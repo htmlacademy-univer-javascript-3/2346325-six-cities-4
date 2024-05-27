@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { AuthorizationStatus } from '../../const';
 import HeaderLogo from '../header-logo/header-logo';
-import { logoutAction } from '../../store/api-actions';
+import { logout } from '../../store/api-actions';
 import { Offer } from '../../types/offers';
 
 function Header(): JSX.Element {
@@ -33,7 +33,7 @@ function Header(): JSX.Element {
                   <Link
                     className="header__nav-link"
                     onClick={() => {
-                      dispatch(logoutAction());
+                      dispatch(logout());
                     }}
                     to="/"
                   >

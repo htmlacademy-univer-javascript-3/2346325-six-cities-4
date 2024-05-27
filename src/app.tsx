@@ -6,11 +6,10 @@ import LoginScreen from './pages/login-screen/login-screen';
 import OfferScreen from './pages/offer-screen/offer-screen';
 import PrivateRoute from './components/private-route/private-route';
 import NotFoundScreen from './pages/not-found-screen/not-found-screen';
-import { offers } from './mocks/offers';
 import LoadingScreen from './pages/loading-screen/loading-screen';
 import { useAppSelector } from './hooks';
-import HistoryRouter from './components/history-route/history-route';
-import { history } from './history';
+import HistoryRouter from './history-route/history-route';
+import { history } from './histoty';
 
 
 export default function App(): JSX.Element {
@@ -33,7 +32,7 @@ export default function App(): JSX.Element {
               path='favorites'
               element={
                 <PrivateRoute authorizationStatus={authorizationStatus}>
-                  <FavoritesScreen offers = {offers}/>
+                  <FavoritesScreen />
                 </PrivateRoute>
               }
             />

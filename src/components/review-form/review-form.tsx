@@ -1,9 +1,16 @@
 import { useState, ChangeEvent } from 'react';
+import { useAppDispatch } from '../../hooks';
+import { sendComment } from '../../store/api-actions';
 
-export function ReviewForm(): JSX.Element {
+type CommentFromProps = {
+  id: string;
+};
+
+export function ReviewForm({ id }: CommentFromProps): JSX.Element {
+  const dispatch = useAppDispatch();
   const [formData, setFormData] = useState({
     text: '',
-    rating: 0,
+    rating: 0
   });
 
   const handleRatingChange = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -25,8 +32,23 @@ export function ReviewForm(): JSX.Element {
     return true;
   }
 
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    dispatch(
+      sendComment({
+        postId: id,
+        rewiew: {
+          comment: formData.text,
+          rating: formData.rating,
+        },
+      })
+    );
+
+    setFormData({text: '', rating: 0});
+  };
+
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit}>
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
@@ -38,6 +60,7 @@ export function ReviewForm(): JSX.Element {
           id="5-stars"
           type="radio"
           onChange={handleRatingChange}
+          checked={formData.rating === 5}
         />
         <label
           htmlFor="5-stars"
@@ -55,6 +78,7 @@ export function ReviewForm(): JSX.Element {
           id="4-stars"
           type="radio"
           onChange={handleRatingChange}
+          checked={formData.rating === 4}
         />
         <label
           htmlFor="4-stars"
@@ -72,6 +96,7 @@ export function ReviewForm(): JSX.Element {
           id="3-stars"
           type="radio"
           onChange={handleRatingChange}
+          checked={formData.rating === 3}
         />
         <label
           htmlFor="3-stars"
@@ -89,6 +114,7 @@ export function ReviewForm(): JSX.Element {
           id="2-stars"
           type="radio"
           onChange={handleRatingChange}
+          checked={formData.rating === 2}
         />
         <label
           htmlFor="2-stars"
@@ -106,6 +132,7 @@ export function ReviewForm(): JSX.Element {
           id="1-star"
           type="radio"
           onChange={handleRatingChange}
+          checked={formData.rating === 1}
         />
         <label
           htmlFor="1-star"

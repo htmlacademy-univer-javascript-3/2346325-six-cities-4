@@ -1,13 +1,13 @@
 import { OffersList } from '../../components/offers-list/offer-card-list';
 import { Offer } from '../../types/offers';
 import { CitiesList } from '../../components/cities-list/cities-list';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import Map from '../../components/map/map';
 import { useState, useEffect } from 'react';
 import { CardType } from '../../const';
-//import { Link } from 'react-router-dom';
 import { SortedOffers } from '../../components/sorted-offers/sorted-offers';
 import Header from '../../components/header/header';
+import { clearOfferPage } from '../../store/action';
 
 export default function MainScreen(): JSX.Element {
   const offers: Offer[] = useAppSelector((state) => state.offers);
@@ -31,6 +31,9 @@ export default function MainScreen(): JSX.Element {
     );
     setCurrentCityOffers(filteredOffers);
   }, [selectedCity, offers]);
+
+  const dispatch = useAppDispatch();
+  dispatch(clearOfferPage());
 
   return (
     <div className="page page--gray page--main">

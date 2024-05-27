@@ -3,14 +3,10 @@ import { Cities } from '../../const';
 import { Link } from 'react-router-dom';
 import FavouritesList from '../../components/favourites-list/favourites-list';
 import Header from '../../components/header/header';
+import { useAppSelector } from '../../hooks';
 
-type FavoritesScreenProps = {
-  offers: Offers;
-};
-
-export default function FavoritesScreen({
-  offers,
-}: FavoritesScreenProps): JSX.Element {
+export default function FavoritesScreen(): JSX.Element {
+  const offers: Offers = useAppSelector((state) => state.offers);
   const favouritesByCities: JSX.Element[] = [];
   Cities.map((city) => {
     const filteredOffers = offers.filter(

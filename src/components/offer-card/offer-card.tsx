@@ -5,18 +5,27 @@ import { CardType } from '../../const';
 type OfferCardProps = {
   offer: Offer;
   onMouseOver: (id: number) => void;
+  onMouseLeave: () => void;
   cardType: CardType;
 };
 
 export default function OfferCard({
   offer,
   onMouseOver,
+  onMouseLeave,
   cardType,
 }: OfferCardProps): JSX.Element {
+
   return (
-    <article
-      onMouseOver={() => onMouseOver(offer.id)}
-      className={`${cardType}__card place-card`}
+    <article className="cities__card place-card"
+      onMouseEnter={(evt) => {
+        evt.preventDefault();
+        onMouseOver(offer.id);
+      }}
+      onMouseLeave={(evt) => {
+        evt.preventDefault();
+        onMouseLeave();
+      }}
     >
       {offer.isPremium && (
         <div className="place-card__mark">

@@ -1,20 +1,21 @@
 import { useEffect, useRef } from 'react';
-import { City, Locations, Location } from '../../types/city';
+import { City, /*Locations/*, Location */} from '../../types/city';
 import useMap from '../../hooks/use-map';
 import 'leaflet/dist/leaflet.css';
+import { Offer } from '../../types/offers';
 import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from './const';
 import leaflet from 'leaflet';
 
 type MapProps = {
   city: City;
-  points: Locations;
-  selectedPoint?: Location;
+  offers: Offer[];
+  selectedOffer: Offer | undefined;
 };
 
 export default function Map({
   city,
-  points,
-  selectedPoint,
+  offers,
+  selectedOffer,
 }: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
@@ -33,18 +34,18 @@ export default function Map({
 
   useEffect(() => {
     if (map) {
-      points.forEach((point) => {
+      offers.forEach((offer) => {
         leaflet
           .marker(
             {
-              lat: point.latitude,
-              lng: point.longitude,
+              lat: offer.location.latitude,
+              lng: offer.location.longitude,
             },
             {
               icon:
-                selectedPoint &&
-                point.latitude === selectedPoint.latitude &&
-                point.longitude === selectedPoint.longitude
+                selectedOffer &&
+                offer.location.latitude === selectedOffer.location.latitude &&
+                offer.location.longitude === selectedOffer.location.longitude
                   ? currentMarker
                   : defaultMarker,
             }
@@ -52,7 +53,7 @@ export default function Map({
           .addTo(map);
       });
     }
-  }, [map, points, selectedPoint, currentMarker, defaultMarker]);
+  }, [map, offers, selectedOffer, currentMarker, defaultMarker]);
 
   return <div style={{ height: '100%' }} ref={mapRef}></div>;
 }

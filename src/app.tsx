@@ -8,8 +8,16 @@ import PrivateRoute from './components/private-route/private-route';
 import NotFoundScreen from './pages/not-found-screen/not-found-screen';
 //import { Offers } from './types/offers';
 import { offers } from './mocks/offers';
+import LoadingScreen from './pages/loading-screen/loading-screen';
+import { useAppSelector } from './hooks';
 
 export default function App(): JSX.Element {
+  const areOffersLoading = useAppSelector((state) => state.offersLoadingState);
+  if (areOffersLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
   return (
     <BrowserRouter>
       <Routes>
@@ -17,7 +25,7 @@ export default function App(): JSX.Element {
         <Route path={AppRoute.Login} element={<LoginScreen />} />
         <Route
           path={AppRoute.Offer}
-          element={<OfferScreen offers={offers} />}
+          element={<OfferScreen />}
         />
         <Route
           path={AppRoute.Favorites}

@@ -12,9 +12,7 @@ import { Link } from 'react-router-dom';
 import { SortedOffers } from '../../components/sorted-offers/sorted-offers';
 
 export default function MainScreen(): JSX.Element {
-  /*const [selectedPoint, setSelectedPoint] = useState<Location | undefined>(SS
-    undefined
-  );*/
+
 
   const offers: Offer[] = useAppSelector((state) => state.offers);
   const selectedCity = useAppSelector((state) => state.city);

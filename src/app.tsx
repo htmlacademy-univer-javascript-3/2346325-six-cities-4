@@ -9,7 +9,6 @@ import NotFoundScreen from './pages/not-found-screen/not-found-screen';
 //import { Offers } from './types/offers';
 import { offers } from './mocks/offers';
 
-
 export default function App(): JSX.Element {
   return (
     <BrowserRouter>

@@ -151,19 +151,21 @@ export default function OfferScreen({ offers }: OfferProps): JSX.Element {
                     {offer.reviews.length}
                   </span>
                 </h2>
-                <ReviewList
-                  reviews={offer.reviews}
-                />
+                <ReviewList reviews={offer.reviews} />
                 <ReviewForm />
               </section>
             </div>
           </div>
         </section>
         <div className="container">
-        <section className="offer__map map">
-            <Map offers={offersNearby} selectedOffer={selectedOffer} city={selectedCity}/>
+          <section className="offer__map map">
+            <Map
+              offers={offersNearby}
+              selectedOffer={selectedOffer}
+              city={selectedCity}
+            />
           </section>
-          <OffersList offers={offersNearby} cardType={CardType.NearPlaces}/>
+          <OffersList offers={offersNearby} cardType={CardType.NearPlaces} />
         </div>
       </main>
     </div>

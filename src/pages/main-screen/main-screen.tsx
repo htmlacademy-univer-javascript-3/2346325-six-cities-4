@@ -11,7 +11,7 @@ import { CardType } from '../../const';
 import { Link } from 'react-router-dom';
 
 export default function MainScreen(): JSX.Element {
-  /*const [selectedPoint, setSelectedPoint] = useState<Location | undefined>(
+  /*const [selectedPoint, setSelectedPoint] = useState<Location | undefined>(SS
     undefined
   );*/
 
@@ -21,7 +21,9 @@ export default function MainScreen(): JSX.Element {
   const [currentCityOffers, setCurrentCityOffers] = useState<Offer[]>(offers);
 
   useEffect(() => {
-    const filteredOffers = offers.filter((offer) => offer.city.name === city.name);
+    const filteredOffers = offers.filter(
+      (offer) => offer.city.name === city.name
+    );
     setCurrentCityOffers(filteredOffers);
   }, [city, offers]);
 
@@ -36,15 +38,21 @@ export default function MainScreen(): JSX.Element {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <Link className="header__nav-link header__nav-link--profile" to="/favourites">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">{offers.length}</span>
+                  <Link
+                    className="header__nav-link header__nav-link--profile"
+                    to="/favourites"
+                  >
+                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+                    <span className="header__user-name user__name">
+                      Oliver.conner@gmail.com
+                    </span>
+                    <span className="header__favorite-count">
+                      {offers.length}
+                    </span>
                   </Link>
                 </li>
                 <li className="header__nav-item">
-                <Link className="header__nav-link" to="#todo">
+                  <Link className="header__nav-link" to="#todo">
                     <span className="header__signout">Sign out</span>
                   </Link>
                 </li>
@@ -76,13 +84,24 @@ export default function MainScreen(): JSX.Element {
                   </svg>
                 </span>
                 <ul className="places__options places__options--custom places__options--opened">
-                <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-                  <li className="places__option" tabIndex={0}>Price: low to high</li>
-                  <li className="places__option" tabIndex={0}>Price: high to low</li>
-                  <li className="places__option" tabIndex={0}>Top rated first</li>
+                  <li
+                    className="places__option places__option--active"
+                    tabIndex={0}
+                  >
+                    Popular
+                  </li>
+                  <li className="places__option" tabIndex={0}>
+                    Price: low to high
+                  </li>
+                  <li className="places__option" tabIndex={0}>
+                    Price: high to low
+                  </li>
+                  <li className="places__option" tabIndex={0}>
+                    Top rated first
+                  </li>
                 </ul>
               </form>
-              <div className='cities__places-list places__list tabs__content'>
+              <div className="cities__places-list places__list tabs__content">
                 <OffersList
                   offers={currentCityOffers}
                   cardType={CardType.Cities}

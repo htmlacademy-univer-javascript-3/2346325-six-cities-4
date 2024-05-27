@@ -15,9 +15,9 @@ export default function OfferCard({
   onMouseLeave,
   cardType,
 }: OfferCardProps): JSX.Element {
-
   return (
-    <article className="cities__card place-card"
+    <article
+      className="cities__card place-card"
       onMouseEnter={(evt) => {
         evt.preventDefault();
         onMouseOver(offer.id);

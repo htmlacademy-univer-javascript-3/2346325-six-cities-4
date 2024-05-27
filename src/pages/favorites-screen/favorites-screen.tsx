@@ -10,10 +10,11 @@ type FavoritesScreenProps = {
 export default function FavoritesScreen({
   offers,
 }: FavoritesScreenProps): JSX.Element {
-
   const favouritesByCities: JSX.Element[] = [];
   Cities.map((city) => {
-    const filteredOffers = offers.filter((offer) => offer.city.name === city.name);
+    const filteredOffers = offers.filter(
+      (offer) => offer.city.name === city.name
+    );
     if (filteredOffers.length !== 0) {
       favouritesByCities.push(
         <li key={city.name} className="favorites__locations-items">
@@ -25,7 +26,7 @@ export default function FavoritesScreen({
             </div>
           </div>
           <div className="favorites__places">
-            <FavouritesList offers={filteredOffers}/>
+            <FavouritesList offers={filteredOffers} />
           </div>
         </li>
       );
@@ -59,7 +60,9 @@ export default function FavoritesScreen({
                     <span className="header__user-name user__name">
                       Oliver.conner@gmail.com
                     </span>
-                    <span className="header__favorite-count">{offers.length}</span>
+                    <span className="header__favorite-count">
+                      {offers.length}
+                    </span>
                   </a>
                 </li>
                 <li className="header__nav-item">
@@ -76,9 +79,7 @@ export default function FavoritesScreen({
         <div className="page__favorites-container container">
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
-            <ul className="favorites__list">
-              {favouritesByCities}
-            </ul>
+            <ul className="favorites__list">{favouritesByCities}</ul>
           </section>
         </div>
       </main>

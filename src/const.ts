@@ -8,9 +8,9 @@ export enum AppRoute {
 }
 
 export enum AuthorizationStatus {
-  Auth = 'AUTH',
-  NoAuth = 'NO_AUTH',
-  Unknown = 'UNKNOWN',
+  Auth = 1,
+  NoAuth = 0,
+  Unknown = -1,
 }
 
 export enum OfferType {
@@ -34,6 +34,8 @@ export enum SortTypes {
 
 export enum APIRoute {
   Offers = '/offers',
+  Login = '/login',
+  Logout = '/logout',
 }
 
 export const Cities: City[] = [

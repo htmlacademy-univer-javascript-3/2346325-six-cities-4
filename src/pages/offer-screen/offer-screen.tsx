@@ -24,7 +24,8 @@ export default function OfferScreen({ offers }: OfferProps): JSX.Element {
   const selectedCity = useAppSelector((state) => state.city);
 
   const handleSelectedOfferOver = (id: number) => {
-    setSelectedOffer(offers.find((offer) => offer.id === id));
+    const foundOffer = offers.find((o) => o.id === id);
+    setSelectedOffer(foundOffer);
   };
 
   const handleSelectedOfferLeave = () => {

@@ -1,10 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
-import {
-  changeCity,
-  setSelectedOffer,
-  setSortType,
-  getOffers,
-} from './action';
+import { changeCity, setSelectedOffer, setSortType, getOffers } from './action';
 import { offers } from '../mocks/offers';
 import { Cities } from '../const';
 import { City } from '../types/city';
@@ -28,19 +23,19 @@ const initialState: StateType = {
 };
 
 const reducer = createReducer(initialState, (builder) => {
-    builder
-      .addCase(changeCity, (state, action) => {
-        state.city = action.payload;
-      })
-      .addCase(getOffers, (state) => {
-        state.offers = offers;
-      })
-      .addCase(setSelectedOffer, (state, action) => {
-        state.selectedOffer = action.payload;
-      })
-      .addCase(setSortType, (state, action) => {
-        state.selectedSortType = action.payload;
-      });
-  });
+  builder
+    .addCase(changeCity, (state, action) => {
+      state.city = action.payload;
+    })
+    .addCase(getOffers, (state) => {
+      state.offers = offers;
+    })
+    .addCase(setSelectedOffer, (state, action) => {
+      state.selectedOffer = action.payload;
+    })
+    .addCase(setSortType, (state, action) => {
+      state.selectedSortType = action.payload;
+    });
+});
 
 export { reducer };

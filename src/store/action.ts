@@ -1,6 +1,7 @@
 import { createAction } from '@reduxjs/toolkit';
 import { City } from '../types/city';
-import { Offer } from '../types/offers';
+import { Offer, OfferPage } from '../types/offers';
+import { Review } from '../types/reviews';
 import { AuthorizationStatus } from '../const';
 
 export const changeCity = createAction('changeCity', (city: City) => ({
@@ -24,3 +25,10 @@ export const setOffersLoadingState = createAction('setOffersLoadingState', (stat
 export const setError = createAction('setError', (message: string | null) => ({payload: message}));
 
 export const setAuthorizationStatus = createAction('setAuthorizationStatus', (status: AuthorizationStatus) => ({payload: status}));
+
+export const setOfferPage = createAction('setOfferPage', (offerPage: OfferPage) => ({payload: offerPage}));
+
+export const clearOfferPage = createAction('clearOfferPage');
+
+export const addReview = createAction('addReview', (rewiew: Review) => ({payload: rewiew}));
+

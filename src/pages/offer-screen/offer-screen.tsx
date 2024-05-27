@@ -1,25 +1,39 @@
 import { useParams } from 'react-router-dom';
-import { /*Offers,*/ Offer } from '../../types/offers';
+import { Offer } from '../../types/offers';
 import { ReviewForm } from '../../components/review-form/review-form';
-import NotFoundScreen from '../not-found-screen/not-found-screen';
 import ReviewList from '../../components/review-list/review-list';
 import Map from '../../components/map/map';
-import { CardType } from '../../const';
+import { AuthorizationStatus, CardType } from '../../const';
 import { OffersList } from '../../components/offers-list/offer-card-list';
-import { useAppSelector } from '../../hooks';
-import { useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useEffect, useState } from 'react';
 import Header from '../../components/header/header';
+import { loadOfferPage } from '../../store/api-actions';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 export default function OfferScreen(): JSX.Element {
   const offers: Offer[] = useAppSelector((state) => state.offers);
   const params = useParams();
-  const offer = offers.find((o) => String(o.id) === params.id);
-
+  const dispatch = useAppDispatch();
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(
     undefined
   );
-  const offersNearby = useAppSelector((state) => state.offersNearby);
   const selectedCity = useAppSelector((state) => state.city);
+
+  useEffect(() => {
+    dispatch(loadOfferPage({ id: params.id ?? '' }));
+  }, [params.id, dispatch]);
+
+  const { offer, nearOffers, reviews } = useAppSelector(
+    ({ offerPage }) => ({
+      offer: offerPage.offer,
+      nearOffers: offerPage.nearOffers,
+      reviews: offerPage.reviews,
+    })
+  );
+
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const isAuthed = (authorizationStatus === AuthorizationStatus.Auth);
 
   const handleSelectedOfferOver = (id: number) => {
     const foundOffer = offers.find((o) => o.id === id);
@@ -30,20 +44,18 @@ export default function OfferScreen(): JSX.Element {
     setSelectedOffer(undefined);
   };
 
-  if (offer === undefined) {
-    return <NotFoundScreen />;
-  }
-
-  return (
+  return offer ? (
     <div className="page">
       <Header />
       <main className="page__main page__main--offer">
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src={offer.previewImage} alt="Photo studio" />
-              </div>
+              {offer.images.map((image) => (
+                <div className="offer__image-wrapper" key={image}>
+                  <img className="offer__image" src={image} alt="Photo studio" />
+                </div>
+              ))}
             </div>
           </div>
           <div className="offer__container container">
@@ -100,30 +112,24 @@ export default function OfferScreen(): JSX.Element {
                 <h2 className="offer__host-title">Meet the host</h2>
                 <div className="offer__host-user user">
                   <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
-                    <img
-                      className="offer__avatar user__avatar"
-                      src="img/avatar-angelina.jpg"
-                      width={74}
-                      height={74}
-                      alt="Host avatar"
-                    />
+                    <img className="offer__avatar user__avatar" src={offer.host.avatarUrl} width="74" height="74" alt="Host avatar" />
                   </div>
-                  <span className="offer__user-name">Angelina</span>
-                  <span className="offer__user-status">Pro</span>
+                  <span className="offer__user-name">{offer.host.name}</span>
+                  <span className="offer__user-status">{offer.host.isPro}</span>
                 </div>
                 <div className="offer__description">
                   <p className="offer__text">{offer.description}</p>
                 </div>
               </div>
               <section className="offer__reviews reviews">
-                <h2 className="reviews__title">
-                  Reviews ·{' '}
-                  <span className="reviews__amount">
-                    {offer.reviews.length}
-                  </span>
-                </h2>
-                <ReviewList reviews={offer.reviews} />
-                <ReviewForm />
+                <ReviewList
+                  reviews={reviews.slice().sort((a, b) => {
+                    const dateA = new Date(a.date).getTime();
+                    const dateB = new Date(b.date).getTime();
+                    return dateB - dateA;
+                  }).slice(0, 10)}
+                />
+                { isAuthed && <ReviewForm id={params.id!} />}
               </section>
             </div>
           </div>
@@ -131,13 +137,13 @@ export default function OfferScreen(): JSX.Element {
         <div className="container">
           <section className="offer__map map">
             <Map
-              offers={offersNearby}
+              offers={nearOffers}
               selectedOffer={selectedOffer}
               city={selectedCity}
             />
           </section>
           <OffersList
-            offers={offersNearby}
+            offers={nearOffers}
             cardType={CardType.NearPlaces}
             onMouseOver={handleSelectedOfferOver}
             onMouseLeave={handleSelectedOfferLeave}
@@ -145,5 +151,6 @@ export default function OfferScreen(): JSX.Element {
         </div>
       </main>
     </div>
-  );
+  ) : <LoadingScreen />;
 }
+

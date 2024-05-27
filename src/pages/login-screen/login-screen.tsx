@@ -2,7 +2,7 @@ import HeaderLogo from '../../components/header-logo/header-logo';
 import { Link, useNavigate } from 'react-router-dom';
 import { FormEvent, useRef } from 'react';
 import { useAppDispatch } from '../../hooks';
-import { loginAction } from '../../store/api-actions';
+import { login } from '../../store/api-actions';
 
 export default function LoginScreen(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
@@ -16,7 +16,7 @@ export default function LoginScreen(): JSX.Element {
 
     if (loginRef.current !== null && passwordRef.current !== null) {
       dispatch(
-        loginAction({
+        login({
           login: loginRef.current.value,
           password: passwordRef.current.value,
         })

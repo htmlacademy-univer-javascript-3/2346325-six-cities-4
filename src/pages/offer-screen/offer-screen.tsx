@@ -1,12 +1,12 @@
 import { useParams } from 'react-router-dom';
 import { Offers } from '../../types/offers';
-import { Review } from '../../types/reviews';
 import { ReviewForm } from '../../components/review-form/review-form';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import ReviewList from '../../components/review-list/review-list';
 import Map from '../../components/map/map';
 import { CardType } from '../../const';
 import { OffersList } from '../../components/offers-list/offer-card-list';
+import { useAppSelector } from '../../hooks';
 
 type OfferProps = {
   offers: Offers;
@@ -15,7 +15,10 @@ type OfferProps = {
 export default function OfferScreen({ offers }: OfferProps): JSX.Element {
   const params = useParams();
   const offer = offers.find((o) => String(o.id) === params.id);
-  const nearPlaces = offers.slice(0, 3);
+
+  const selectedOffer = useAppSelector((state) => state.selectedOfferNearby);
+  const offersNearby = useAppSelector((state) => state.offersNearby);
+  const selectedCity = useAppSelector((state) => state.city);
 
   if (offer === undefined) {
     return <NotFoundScreen />;
@@ -148,31 +151,21 @@ export default function OfferScreen({ offers }: OfferProps): JSX.Element {
                     {offer.reviews.length}
                   </span>
                 </h2>
-                <ReviewList
-                  reviews={offer.reviews.sort((a: Review, b: Review) =>
-                    a.date < b.date ? 1 : -1
-                  )}
-                />
+                <ReviewList reviews={offer.reviews} />
                 <ReviewForm />
               </section>
             </div>
           </div>
-          <section className="offer__map map">
-            <Map
-              points={nearPlaces.map((nearPlace) => nearPlace.location)}
-              city={nearPlaces[0].city}
-            />
-          </section>
         </section>
         <div className="container">
-          <section className="near-places places">
-            <h2 className="near-places__title">
-              Other places in the neighbourhood
-            </h2>
-            <div className="near-places__list places__list">
-              <OffersList offers={nearPlaces} cardType={CardType.NearPlaces} />
-            </div>
+          <section className="offer__map map">
+            <Map
+              offers={offersNearby}
+              selectedOffer={selectedOffer}
+              city={selectedCity}
+            />
           </section>
+          <OffersList offers={offersNearby} cardType={CardType.NearPlaces} />
         </div>
       </main>
     </div>

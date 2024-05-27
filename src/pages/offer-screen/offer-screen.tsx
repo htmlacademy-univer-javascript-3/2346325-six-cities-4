@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { Offers } from '../../types/offers';
+import { Offers, Offer } from '../../types/offers';
 import { ReviewForm } from '../../components/review-form/review-form';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import ReviewList from '../../components/review-list/review-list';
@@ -7,6 +7,7 @@ import Map from '../../components/map/map';
 import { CardType } from '../../const';
 import { OffersList } from '../../components/offers-list/offer-card-list';
 import { useAppSelector } from '../../hooks';
+import { useState } from 'react';
 
 type OfferProps = {
   offers: Offers;
@@ -16,9 +17,19 @@ export default function OfferScreen({ offers }: OfferProps): JSX.Element {
   const params = useParams();
   const offer = offers.find((o) => String(o.id) === params.id);
 
-  const selectedOffer = useAppSelector((state) => state.selectedOfferNearby);
+  const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(
+    undefined
+  );
   const offersNearby = useAppSelector((state) => state.offersNearby);
   const selectedCity = useAppSelector((state) => state.city);
+
+  const handleSelectedOfferOver = (id: number) => {
+    setSelectedOffer(offers.find((offer) => offer.id === id));
+  };
+
+  const handleSelectedOfferLeave = () => {
+    setSelectedOffer(undefined);
+  };
 
   if (offer === undefined) {
     return <NotFoundScreen />;
@@ -165,7 +176,12 @@ export default function OfferScreen({ offers }: OfferProps): JSX.Element {
               city={selectedCity}
             />
           </section>
-          <OffersList offers={offersNearby} cardType={CardType.NearPlaces} />
+          <OffersList
+            offers={offersNearby}
+            cardType={CardType.NearPlaces}
+            onMouseOver={handleSelectedOfferOver}
+            onMouseLeave={handleSelectedOfferLeave}
+          />
         </div>
       </main>
     </div>

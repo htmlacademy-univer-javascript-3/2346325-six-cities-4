@@ -2,47 +2,33 @@ import { Offers /*Offer */ } from '../../types/offers';
 import OfferCard from '../offer-card/offer-card';
 //import { useState } from 'react';
 //import { Location } from '../../types/city';
-import {
-  changeSelectedOffer,
-  changeSelectedOfferNearby,
-} from '../../store/action';
 import { CardType } from '../../const';
-import { useAppDispatch } from '../../hooks';
+import { useAppSelector } from '../../hooks';
+import { sortOffers } from '../../utils';
 
 type OfferCardListProps = {
   offers: Offers;
   cardType: CardType;
+  onMouseOver: (id: number) => void;
+  onMouseLeave: () => void;
 };
 
-export function OffersList({ offers, cardType }: OfferCardListProps) {
-  const dispatch = useAppDispatch();
-
-  const handleMouseEnterFront = (id: number) => {
-    const activeOffer = offers.find((offer) => offer.id === id);
-    if (activeOffer !== undefined) {
-      dispatch(changeSelectedOffer(activeOffer));
-    }
-  };
-
-  const handleMouseEnterNearby = (id: number) => {
-    const activeOffer = offers.find((offer) => offer.id === id);
-    if (activeOffer !== undefined) {
-      dispatch(changeSelectedOfferNearby(activeOffer));
-    }
-  };
-
-  const handleMouseLeave = () => {
-    dispatch(changeSelectedOffer(undefined));
-  };
+export function OffersList({
+  offers,
+  cardType,
+  onMouseOver,
+  onMouseLeave,
+}: OfferCardListProps) {
+  const selectedSortType = useAppSelector((state) => state.selectedSortType);
 
   return cardType === CardType.Cities ? (
     <div className="cities__places-list places__list tabs__content">
-      {offers.map((offer) => (
+      {sortOffers(offers, selectedSortType).map((offer) => (
         <OfferCard
           key={offer.id}
-          onMouseOver={handleMouseEnterFront}
-          onMouseLeave={handleMouseLeave}
           offer={offer}
+          onMouseOver={onMouseOver}
+          onMouseLeave={onMouseLeave}
           cardType={CardType.Cities}
         />
       ))}
@@ -54,8 +40,8 @@ export function OffersList({ offers, cardType }: OfferCardListProps) {
         {offers.map((offer) => (
           <OfferCard
             key={offer.id}
-            onMouseOver={handleMouseEnterNearby}
-            onMouseLeave={handleMouseLeave}
+            onMouseOver={onMouseOver}
+            onMouseLeave={onMouseLeave}
             offer={offer}
             cardType={CardType.NearPlaces}
           />

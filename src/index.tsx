@@ -4,12 +4,13 @@ import ReactDOM from 'react-dom/client';
 import App from './app';
 import { store } from './store';
 import { Provider } from 'react-redux';
+import { loadOffers } from './store/api-actions';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
-export const offerCardNumber = 5;
+store.dispatch(loadOffers());
 
 root.render(
   <React.StrictMode>

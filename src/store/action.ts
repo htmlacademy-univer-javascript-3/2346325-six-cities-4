@@ -15,3 +15,7 @@ export const setSelectedOffer = createAction(
 export const setSortType = createAction('setSortType', (sortType: string) => ({
   payload: sortType,
 }));
+
+export const setOffers = createAction('setOffers', (Offers: Offer[]) => ({payload: Offers}));
+
+export const setOffersLoadingState = createAction('setOffersLoadingState', (state: boolean) => ({payload: state}));

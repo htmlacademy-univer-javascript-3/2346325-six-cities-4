@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { Offers, Offer } from '../../types/offers';
+import { /*Offers,*/ Offer } from '../../types/offers';
 import { ReviewForm } from '../../components/review-form/review-form';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import ReviewList from '../../components/review-list/review-list';
@@ -9,11 +9,8 @@ import { OffersList } from '../../components/offers-list/offer-card-list';
 import { useAppSelector } from '../../hooks';
 import { useState } from 'react';
 
-type OfferProps = {
-  offers: Offers;
-};
-
-export default function OfferScreen({ offers }: OfferProps): JSX.Element {
+export default function OfferScreen(): JSX.Element {
+  const offers: Offer[] = useAppSelector((state) => state.offers);
   const params = useParams();
   const offer = offers.find((o) => String(o.id) === params.id);
 
@@ -80,11 +77,9 @@ export default function OfferScreen({ offers }: OfferProps): JSX.Element {
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              {offer.images.map((src, index) => (
-                <div className="offer__image-wrapper" key={src + String(index)}>
-                  <img className="offer__image" src={src} alt="Photo studio" />
-                </div>
-              ))}
+              <div className="offer__image-wrapper">
+                <img className="offer__image" src={offer.previewImage} alt="Photo studio" />
+              </div>
             </div>
           </div>
           <div className="offer__container container">

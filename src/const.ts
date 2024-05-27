@@ -32,6 +32,10 @@ export enum SortTypes {
   TopRatedFirst = 'Top rated first',
 }
 
+export enum APIRoute {
+  Offers = '/offers',
+}
+
 export const Cities: City[] = [
   {
     name: 'Paris',

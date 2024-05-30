@@ -1,7 +1,5 @@
-import { Offers /*Offer */ } from '../../types/offers';
+import { Offers  } from '../../types/offers';
 import OfferCard from '../offer-card/offer-card';
-//import { useState } from 'react';
-//import { Location } from '../../types/city';
 import { CardType } from '../../const';
 import { useAppSelector } from '../../hooks';
 import { sortOffers } from '../../utils';

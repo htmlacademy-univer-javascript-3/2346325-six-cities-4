@@ -2,11 +2,11 @@ import { useState, ChangeEvent } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { sendComment } from '../../store/api-actions';
 
-type CommentFromProps = {
+type ReviewFormProps = {
   id: string;
 };
 
-export function ReviewForm({ id }: CommentFromProps): JSX.Element {
+export function ReviewForm({ id }: ReviewFormProps): JSX.Element {
   const dispatch = useAppDispatch();
   const [formData, setFormData] = useState({
     text: '',

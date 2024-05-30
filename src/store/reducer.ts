@@ -15,6 +15,7 @@ type StateType = {
   error: string | null;
   authorizationStatus: AuthorizationStatus;
   offerPage: OfferPage;
+
 };
 
 const initialState: StateType = {

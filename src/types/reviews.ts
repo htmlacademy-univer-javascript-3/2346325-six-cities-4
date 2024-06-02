@@ -21,3 +21,9 @@ export type CommentFormDataType = {
   rating: number;
 };
 
+export type ReviewData = {
+  comment: string;
+  rating: number;
+  offerId: string;
+};
+

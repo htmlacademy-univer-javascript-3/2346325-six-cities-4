@@ -1,50 +1,46 @@
 import { useParams } from 'react-router-dom';
-import { Offer } from '../../types/offers';
 import { ReviewForm } from '../../components/review-form/review-form';
 import ReviewList from '../../components/review-list/review-list';
-import Map from '../../components/map/map';
-import { AuthorizationStatus, CardType } from '../../const';
-import { OffersList } from '../../components/offers-list/offer-card-list';
+import { Map } from '../../components/map/map';
+import NearOffersList from '../../components/near-offers-list/near-offers-list';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { useEffect, useState } from 'react';
+import { useEffect} from 'react';
 import Header from '../../components/header/header';
-import { loadOfferPage } from '../../store/api-actions';
 import LoadingScreen from '../loading-screen/loading-screen';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
+import FavoriteButton from '../../components/favorite-button/favorite-button';
+import { fetchNearbyAction, fetchOfferAction, fetchReviewsAction, getAuthCheckedStatus, getIsNearbyOffersLoading, getIsOfferLoading, getIsReviewsLoading, getNearbyOffers, getOffer, getReviews } from '../../store';
 
-export default function OfferScreen(): JSX.Element {
-  const offers: Offer[] = useAppSelector((state) => state.offers);
-  const params = useParams();
+function OfferPage(): JSX.Element {
+  const { id } = useParams();
   const dispatch = useAppDispatch();
-  const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(
-    undefined
-  );
-  const selectedCity = useAppSelector((state) => state.city);
+
+  const reviews = useAppSelector(getReviews);
+  const offer = useAppSelector(getOffer);
+  const nearbyList = useAppSelector(getNearbyOffers);
+  const isAuthed = useAppSelector(getAuthCheckedStatus);
+  const isOfferLoading = useAppSelector(getIsOfferLoading);
+  const isReviewsLoading = useAppSelector(getIsReviewsLoading);
+  const isNearbyOffersLoading = useAppSelector(getIsNearbyOffersLoading);
+
+  const isAnyLoading = isOfferLoading || isNearbyOffersLoading || isReviewsLoading;
+
+  const nearbyOffers = nearbyList.slice(0, 3);
 
   useEffect(() => {
-    dispatch(loadOfferPage({ id: params.id ?? '' }));
-  }, [params.id, dispatch]);
-
-  const { offer, nearOffers, reviews } = useAppSelector(
-    ({ offerPage }) => ({
-      offer: offerPage.offer,
-      nearOffers: offerPage.nearOffers,
-      reviews: offerPage.reviews,
-    })
-  );
-
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const isAuthed = (authorizationStatus === AuthorizationStatus.Auth);
-
-  const handleSelectedOfferOver = (id: number) => {
-    const foundOffer = offers.find((o) => o.id === id);
-    setSelectedOffer(foundOffer);
-  };
-
-  const handleSelectedOfferLeave = () => {
-    setSelectedOffer(undefined);
-  };
-
-  return offer ? (
+    if (id) {
+      dispatch(fetchOfferAction(id));
+      dispatch(fetchReviewsAction(id));
+      dispatch(fetchNearbyAction(id));
+    }
+  }, [dispatch, id]);
+  if (isAnyLoading){
+    return <LoadingScreen />;
+  }
+  if (!offer) {
+    return <NotFoundScreen />;
+  }
+  return (
     <div className="page">
       <Header />
       <main className="page__main page__main--offer">
@@ -66,46 +62,47 @@ export default function OfferScreen(): JSX.Element {
                 </div>
               )}
               <div className="offer__name-wrapper">
-                <h1 className="offer__name">{offer.title}</h1>
-                <button className="offer__bookmark-button button" type="button">
-                  <svg className="offer__bookmark-icon" width={31} height={33}>
-                    <use xlinkHref="#icon-bookmark" />
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <h1 className="offer__name">
+                  {offer.title}
+                </h1>
+                <FavoriteButton
+                  isFavorite={offer.isFavorite}
+                  id={offer.id}
+                  width="31"
+                  height="33"
+                  buttonClass="offer__bookmark-button"
+                  activeClass="offer__bookmark-button--active"
+                  iconClass="offer__bookmark-icon"
+                />
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{ width: `${(offer.rating / 5) * 100}%` }} />
+                  <span style={{width: `${offer.rating / 5 * 100}%`}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="offer__rating-value rating__value">
-                  {offer.rating}
-                </span>
+                <span className="offer__rating-value rating__value">{offer.rating}</span>
               </div>
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
                   {offer.type}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
-                  {offer.bedrooms} Bedrooms
+                  {offer.bedrooms} Bedroom{offer.bedrooms === 1 || 's'}
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                  Max {offer.maxAdults} adults
+                  Max {offer.maxAdults} adult{offer.maxAdults === 1 || 's'}
                 </li>
               </ul>
               <div className="offer__price">
-                <b className="offer__price-value">{offer.price}</b>
+                <b className="offer__price-value">&euro;{offer.price}</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 <ul className="offer__inside-list">
-                  {offer.goods.map((item) => (
-                    <li className="offer__inside-item" key={item}>
-                      {item}
-                    </li>
-                  ))}
+                  {offer.goods.map(
+                    (good) => (<li key={good} className="offer__inside-item">{good}</li>)
+                  )}
                 </ul>
               </div>
               <div className="offer__host">
@@ -114,14 +111,19 @@ export default function OfferScreen(): JSX.Element {
                   <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
                     <img className="offer__avatar user__avatar" src={offer.host.avatarUrl} width="74" height="74" alt="Host avatar" />
                   </div>
-                  <span className="offer__user-name">{offer.host.name}</span>
-                  <span className="offer__user-status">{offer.host.isPro}</span>
+                  <span className="offer__user-name">
+                    {offer.host.name}
+                  </span>
+                  {offer.host.isPro && <span className="offer__user-status">Pro</span>}
                 </div>
                 <div className="offer__description">
-                  <p className="offer__text">{offer.description}</p>
+                  <p className="offer__text">
+                    {offer.description}
+                  </p>
                 </div>
               </div>
               <section className="offer__reviews reviews">
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
                 <ReviewList
                   reviews={reviews.slice().sort((a, b) => {
                     const dateA = new Date(a.date).getTime();
@@ -129,28 +131,25 @@ export default function OfferScreen(): JSX.Element {
                     return dateB - dateA;
                   }).slice(0, 10)}
                 />
-                { isAuthed && <ReviewForm id={params.id!} />}
+                { isAuthed && <ReviewForm id={id!} />}
               </section>
             </div>
           </div>
-        </section>
-        <div className="container">
           <section className="offer__map map">
             <Map
-              offers={nearOffers}
-              selectedOffer={selectedOffer}
-              city={selectedCity}
+              city={nearbyOffers[0].city}
+              offers={nearbyOffers}
+              selectedOffer={offer}
             />
           </section>
-          <OffersList
-            offers={nearOffers}
-            cardType={CardType.NearPlaces}
-            onMouseOver={handleSelectedOfferOver}
-            onMouseLeave={handleSelectedOfferLeave}
-          />
+        </section>
+        <div className="container">
+          <NearOffersList offers={nearbyOffers.slice(0, 3)} />
         </div>
       </main>
     </div>
-  ) : <LoadingScreen />;
+  );
 }
+
+export default OfferPage;
 

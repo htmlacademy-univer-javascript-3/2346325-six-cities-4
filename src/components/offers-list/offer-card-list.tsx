@@ -1,50 +1,27 @@
-import { Offers  } from '../../types/offers';
+import { Offers, Offer } from '../../types/offers';
 import OfferCard from '../offer-card/offer-card';
-import { CardType } from '../../const';
 import { useAppSelector } from '../../hooks';
 import { sortOffers } from '../../utils';
+import { getSelectedSortType } from '../../store';
 
 type OfferCardListProps = {
   offers: Offers;
-  cardType: CardType;
-  onMouseOver: (id: number) => void;
+  onMouseOver: (point: Offer) => void;
   onMouseLeave: () => void;
 };
 
 export function OffersList({
   offers,
-  cardType,
   onMouseOver,
   onMouseLeave,
 }: OfferCardListProps) {
-  const selectedSortType = useAppSelector((state) => state.selectedSortType);
+  const selectedSortType = useAppSelector(getSelectedSortType);
 
-  return cardType === CardType.Cities ? (
+  return (
     <div className="cities__places-list places__list tabs__content">
       {sortOffers(offers, selectedSortType).map((offer) => (
-        <OfferCard
-          key={offer.id}
-          offer={offer}
-          onMouseOver={onMouseOver}
-          onMouseLeave={onMouseLeave}
-          cardType={CardType.Cities}
-        />
+        <OfferCard key={offer.id} offer={offer} onMouseOver={onMouseOver} onMouseLeave={onMouseLeave} />
       ))}
     </div>
-  ) : (
-    <section className="near-places places">
-      <h2 className="near-places__title">Other places in the neighbourhood</h2>
-      <div className="near-places__list places__list">
-        {offers.map((offer) => (
-          <OfferCard
-            key={offer.id}
-            onMouseOver={onMouseOver}
-            onMouseLeave={onMouseLeave}
-            offer={offer}
-            cardType={CardType.NearPlaces}
-          />
-        ))}
-      </div>
-    </section>
   );
 }

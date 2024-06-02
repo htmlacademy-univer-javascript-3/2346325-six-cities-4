@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setSortType } from '../../store/action';
+import { changeSortingType, getSelectedSortType } from '../../store';
 import { SortTypes } from '../../const';
 
 export function SortedOffers() {
   const [isOpen, setIsOpen] = useState(false);
-  const selectedSortType = useAppSelector((state) => state.selectedSortType);
+  const selectedSortType = useAppSelector(getSelectedSortType);
 
   const dispatch = useAppDispatch();
 
@@ -30,11 +30,9 @@ export function SortedOffers() {
         {Object.values(SortTypes).map((type) => (
           <li
             key={type}
-            className={`places__option ${
-              selectedSortType === type.toString() && 'places__option--active'
-            }`}
+            className={`places__option ${selectedSortType === type && 'places__option--active'}`}
             tabIndex={0}
-            onClick={() => dispatch(setSortType(type))}
+            onClick={() => dispatch(changeSortingType(type))}
           >
             {type}
           </li>

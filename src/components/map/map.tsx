@@ -1,59 +1,63 @@
 import { useEffect, useRef } from 'react';
-import { City /*Locations/*, Location */ } from '../../types/city';
-import useMap from '../../hooks/use-map';
-import 'leaflet/dist/leaflet.css';
 import { Offer } from '../../types/offers';
-import { URL_MARKER_CURRENT, URL_MARKER_DEFAULT } from './const';
-import leaflet from 'leaflet';
+import useMap from '../../hooks/use-map';
+import { Icon, Marker } from 'leaflet';
+import { City } from '../../types/city';
+import 'leaflet/dist/leaflet.css';
 
 type MapProps = {
-  city: City;
   offers: Offer[];
+  city: City;
   selectedOffer: Offer | undefined;
 };
 
-export default function Map({
-  city,
-  offers,
-  selectedOffer,
-}: MapProps): JSX.Element {
+const defaultCustomIcon = new Icon({
+  iconUrl: 'img/pin.svg',
+  iconSize: [28, 40],
+  iconAnchor: [20, 40],
+});
+
+const currentCustomIcon = new Icon({
+  iconUrl: 'img/pin-active.svg',
+  iconSize: [28, 40],
+  iconAnchor: [20, 40],
+});
+
+export function Map({offers, selectedOffer, city}: MapProps){
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
-
-  const defaultMarker = leaflet.icon({
-    iconUrl: URL_MARKER_DEFAULT,
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-  });
-
-  const currentMarker = leaflet.icon({
-    iconUrl: URL_MARKER_CURRENT,
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
-  });
+  const markersRef = useRef<Marker[]>([]);
 
   useEffect(() => {
     if (map) {
-      offers.forEach((offer) => {
-        leaflet
-          .marker(
-            {
-              lat: offer.location.latitude,
-              lng: offer.location.longitude,
-            },
-            {
-              icon:
-                selectedOffer &&
-                offer.location.latitude === selectedOffer.location.latitude &&
-                offer.location.longitude === selectedOffer.location.longitude
-                  ? currentMarker
-                  : defaultMarker,
-            }
-          )
-          .addTo(map);
-      });
-    }
-  }, [map, offers, selectedOffer, currentMarker, defaultMarker]);
+      markersRef.current.forEach((marker) => map.removeLayer(marker));
+      markersRef.current = [];
 
-  return <div style={{ height: '100%' }} ref={mapRef}></div>;
+      offers
+        .filter((offer) => offer !== selectedOffer)
+        .forEach((offer) => {
+          const marker = new Marker({
+            lat: offer.location.latitude,
+            lng: offer.location.longitude,
+          }, {icon: defaultCustomIcon}).addTo(map);
+          markersRef.current.push(marker);
+        });
+
+      if (selectedOffer) {
+        const selectedMarker = new Marker({
+          lat: selectedOffer.location.latitude,
+          lng: selectedOffer.location.longitude,
+        }, {icon: currentCustomIcon}).addTo(map);
+        markersRef.current.push(selectedMarker);
+        map.setView({
+          lat: selectedOffer.location.latitude,
+          lng: selectedOffer.location.longitude
+        }, selectedOffer.location.zoom);
+      }
+    }
+
+  }, [map, offers, selectedOffer]);
+
+
+  return <div style={{height: '100%'}} ref={mapRef}></div>;
 }

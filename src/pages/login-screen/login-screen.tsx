@@ -1,28 +1,36 @@
 import HeaderLogo from '../../components/header-logo/header-logo';
 import { Link, useNavigate } from 'react-router-dom';
 import { FormEvent, useRef } from 'react';
-import { useAppDispatch } from '../../hooks';
-import { login } from '../../store/api-actions';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { Cities } from '../../const';
+import { City } from '../../types/city';
+import { getRandomArrayElement, isPasswordValid } from '../../utils';
+import { toast } from 'react-toastify';
+import { changeCity, getIsSubmittingLogin, loginAction } from '../../store';
 
 export default function LoginScreen(): JSX.Element {
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
+  const isSubmittingLogin = useAppSelector(getIsSubmittingLogin);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const randomCity = getRandomArrayElement(Object.keys(Cities));
+  const randomCityDetails: City = Cities[randomCity];
+
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (loginRef.current !== null && passwordRef.current !== null) {
-      dispatch(
-        login({
-          login: loginRef.current.value,
-          password: passwordRef.current.value,
-        })
-      );
+    const login = loginRef.current?.value;
+    const password = passwordRef.current?.value;
+
+    if (password && login && isPasswordValid(password)) {
+      dispatch(loginAction({ login, password }));
+      navigate('/');
+      return ;
     }
-    navigate('/');
+    toast.error('Некорректный пароль!');
   };
 
   return (
@@ -48,6 +56,7 @@ export default function LoginScreen(): JSX.Element {
                   placeholder="Email"
                   required
                   ref={loginRef}
+                  disabled={isSubmittingLogin}
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
@@ -59,6 +68,7 @@ export default function LoginScreen(): JSX.Element {
                   placeholder="Password"
                   required
                   ref={passwordRef}
+                  disabled={isSubmittingLogin}
                 />
               </div>
               <button
@@ -70,9 +80,9 @@ export default function LoginScreen(): JSX.Element {
             </form>
           </section>
           <section className="locations locations--login locations--current">
-            <div className="locations__item">
-              <Link className="locations__item-link" to="#todo">
-                <span>Amsterdam</span>
+            <div className="locations__item" >
+              <Link className="locations__item-link" to="/" >
+                <span onClick={ () => dispatch(changeCity(randomCityDetails)) }>{randomCity}</span>
               </Link>
             </div>
           </section>

@@ -9,7 +9,7 @@ export type OfferPage = {
 }
 
 export type Offer = {
-  id: number;
+  id: string;
   title: string;
   type: OfferType;
   price: number;
@@ -30,6 +30,11 @@ export type Offer = {
   previewImage: string;
   maxAdults: number;
   reviews: Reviews;
+};
+
+export type favoriteDataType = {
+  offerId: string;
+  status: boolean;
 };
 
 export type Offers = Offer[];

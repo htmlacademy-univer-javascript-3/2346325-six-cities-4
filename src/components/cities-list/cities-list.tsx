@@ -1,6 +1,6 @@
 import { Cities } from '../../const';
 import { useAppDispatch } from '../../hooks';
-import { changeCity } from '../../store/action';
+import { changeCity } from '../../store';
 import { City } from '../../types/city';
 import { CitiesElement } from '../cities-element/cities-element';
 
@@ -11,7 +11,7 @@ export function CitiesList() {
   };
   return (
     <ul className="locations__list tabs__list">
-      {Cities.map((city) => (
+      {Object.values(Cities).map((city) => (
         <CitiesElement
           key={city.name}
           city={city}

@@ -1,6 +1,7 @@
-import { useState, ChangeEvent } from 'react';
-import { useAppDispatch } from '../../hooks';
-import { sendComment } from '../../store/api-actions';
+import { useState, ChangeEvent, useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getIsReviewsStatusSubmitting, getReviewsHasError, postReviewAction, setReviewsErrorStatus } from '../../store';
+import { LoadingStatus } from '../../const';
 
 type ReviewFormProps = {
   id: string;
@@ -13,38 +14,55 @@ export function ReviewForm({ id }: ReviewFormProps): JSX.Element {
     rating: 0
   });
 
+  const isLoading = useAppSelector(getIsReviewsStatusSubmitting);
+  const reviewsStatus = useAppSelector(getReviewsHasError);
+
+  const [valid, setValid] = useState(false);
+  const disabledSubmitButton = !valid || isLoading;
+
+  const validateForm = (comment: string, newRating: number) => {
+    const isValid = (
+      comment.length >= 50 &&
+      newRating !== 0
+    );
+    setValid(isValid);
+  };
+
+  const resetForm = () => {
+    setValid(false);
+    setFormData({
+      text: '',
+      rating: 0
+    });
+  };
+
+  useEffect(() => {
+    if (reviewsStatus === LoadingStatus.Success) {
+      resetForm();
+      dispatch(setReviewsErrorStatus(LoadingStatus.Idle));
+    }
+  }, [reviewsStatus, dispatch]);
+
   const handleRatingChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, rating: Number(evt.target.value) });
+    const newRating = Number(evt.target.value);
+    setFormData({...formData, rating: newRating});
+    validateForm(formData.text, newRating);
   };
   const handleTextChange = (evt: ChangeEvent<HTMLTextAreaElement>) => {
-    setFormData({ ...formData, text: evt.target.value });
+    const newText = evt.target.value;
+    setFormData({...formData, text: newText});
+    validateForm(newText, formData.rating);
   };
-
-  function isFormValid(): boolean {
-    if (formData.text.length < 50 || formData.text.length > 300) {
-      return false;
-    }
-
-    if (formData.rating < 1) {
-      return false;
-    }
-
-    return true;
-  }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     dispatch(
-      sendComment({
-        postId: id,
-        rewiew: {
-          comment: formData.text,
-          rating: formData.rating,
-        },
+      postReviewAction({
+        offerId: id,
+        comment: formData.text,
+        rating: formData.rating,
       })
     );
-
-    setFormData({text: '', rating: 0});
   };
 
   return (
@@ -151,7 +169,10 @@ export function ReviewForm({ id }: ReviewFormProps): JSX.Element {
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={formData.text}
         onChange={handleTextChange}
-      />
+        disabled={isLoading}
+        required
+      >
+      </textarea>
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set{' '}
@@ -161,7 +182,7 @@ export function ReviewForm({ id }: ReviewFormProps): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={!isFormValid()}
+          disabled={disabledSubmitButton}
         >
           Submit
         </button>

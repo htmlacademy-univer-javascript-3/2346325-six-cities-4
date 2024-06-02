@@ -1,16 +1,13 @@
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { AuthorizationStatus } from '../../const';
 import HeaderLogo from '../header-logo/header-logo';
-import { logout } from '../../store/api-actions';
-import { Offer } from '../../types/offers';
+import { getAuthCheckedStatus, getFavoritesCount, getUserInfo, logoutAction } from '../../store';
 
 function Header(): JSX.Element {
-  const offers: Offer[] = useAppSelector((state) => state.offers);
-  const favoriteOffersCount = offers.filter((offer) => offer.isFavorite).length;
+  const userInfo = useAppSelector(getUserInfo);
+  const favoriteOffersCount = useAppSelector(getFavoritesCount);
+  const isAuthed = useAppSelector(getAuthCheckedStatus);
   const dispatch = useAppDispatch();
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const isAuthed = (authorizationStatus === AuthorizationStatus.Auth);
   return (
     <header className="header">
       <div className="container">
@@ -23,9 +20,9 @@ function Header(): JSX.Element {
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
                   <Link className="header__nav-link header__nav-link--profile" to="/favorites">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
+                    <div className="header__avatar-wrapper user__avatar-wrapper" style={{backgroundImage: `url(${userInfo?.avatarUrl})`}} >
                     </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                    <span className="header__user-name user__name">{userInfo?.email}</span>
                     <span className="header__favorite-count">{favoriteOffersCount}</span>
                   </Link>
                 </li>
@@ -33,7 +30,7 @@ function Header(): JSX.Element {
                   <Link
                     className="header__nav-link"
                     onClick={() => {
-                      dispatch(logout());
+                      dispatch(logoutAction());
                     }}
                     to="/"
                   >

@@ -1,5 +1,6 @@
 import { useAppSelector } from '../../hooks';
 import { City } from '../../types/city';
+import { getSelectedCity } from '../../store';
 
 type CitiesElementProps = {
   city: City;
@@ -19,7 +20,7 @@ export function CitiesElement({ city, onCityChange }: CitiesElementProps) {
         className={`locations__item-link
         tabs__item
         ${
-    useAppSelector((state) => state.city) === city
+    useAppSelector(getSelectedCity) === city
       ? 'tabs__item--active'
       : ''
     }`}

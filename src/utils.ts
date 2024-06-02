@@ -20,4 +20,16 @@ export const sortOffers = (offers: Offer[], sortType: string): Offer[] => {
   }
 };
 
+export const isPasswordValid = (password: string): boolean => {
+  const hasLetter = /[a-zA-Z]/.test(password);
+  const hasNumber = /[0-9]/.test(password);
+
+  return hasLetter && hasNumber;
+};
+
+export function getRandomArrayElement<T>(array: T[]) {
+  const index = Math.floor(Math.random() * array.length);
+  return array[index];
+}
+
 export const formatRating = (rate: number) => `${(rate / 5) * 100}%`;

@@ -1,10 +1,11 @@
+import { memo } from 'react';
 import { Cities } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import { changeCity } from '../../store';
 import { City } from '../../types/city';
-import { CitiesElement } from '../cities-element/cities-element';
+import CitiesElement from '../cities-element/cities-element';
 
-export function CitiesList() {
+function CitiesList(): JSX.Element {
   const dispatch = useAppDispatch();
   const handleCityChange = (city: City) => {
     dispatch(changeCity(city));
@@ -21,3 +22,7 @@ export function CitiesList() {
     </ul>
   );
 }
+
+const memoizedCitiesList = memo(CitiesList);
+
+export default memoizedCitiesList;

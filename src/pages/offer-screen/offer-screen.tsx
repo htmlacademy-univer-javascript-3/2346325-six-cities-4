@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { ReviewForm } from '../../components/review-form/review-form';
 import ReviewList from '../../components/review-list/review-list';
-import { Map } from '../../components/map/map';
+import  Map  from '../../components/map/map';
 import NearOffersList from '../../components/near-offers-list/near-offers-list';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { useEffect} from 'react';
@@ -138,8 +138,8 @@ function OfferPage(): JSX.Element {
           <section className="offer__map map">
             <Map
               city={nearbyOffers[0].city}
-              offers={nearbyOffers}
-              selectedOffer={offer}
+              points={nearbyOffers}
+              selectedPoint={offer}
             />
           </section>
         </section>

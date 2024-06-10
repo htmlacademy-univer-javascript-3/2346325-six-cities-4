@@ -1,4 +1,4 @@
-import { CitiesList } from '../../components/cities-list/cities-list';
+import  CitiesList from '../../components/cities-list/cities-list';
 import { useAppSelector } from '../../hooks';
 import Header from '../../components/header/header';
 import { getOffers, getSelectedCity } from '../../store';

@@ -3,7 +3,7 @@ import { Offer } from '../../types/offers';
 import { SortedOffers } from '../sorted-offers/sorted-offers';
 import { OffersList } from '../offers-list/offer-card-list';
 import { useCallback, useState } from 'react';
-import { Map } from '../map/map';
+import  Map  from '../map/map';
 
 type CityOffersProps = {
   city: City;
@@ -11,7 +11,7 @@ type CityOffersProps = {
 };
 
 function CityOffers({ city, currentCityOffers }: CityOffersProps): JSX.Element {
-  const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
+  const [selectedOffer, setSelectedOffer] = useState<Offer | null>(null);
 
   const onMouseEnter = useCallback(
     (offer: Offer) => setSelectedOffer(offer),
@@ -19,7 +19,7 @@ function CityOffers({ city, currentCityOffers }: CityOffersProps): JSX.Element {
   );
 
   const onMouseLeave = useCallback(
-    () => setSelectedOffer(undefined),
+    () => setSelectedOffer(null),
     []
   );
 
@@ -36,9 +36,9 @@ function CityOffers({ city, currentCityOffers }: CityOffersProps): JSX.Element {
           <div className="cities__right-section">
             <section className="cities__map map">
               <Map
-                offers={(currentCityOffers)}
+                points={(currentCityOffers)}
                 city={city}
-                selectedOffer={selectedOffer}
+                selectedPoint={selectedOffer}
               />
             </section>
           </div>

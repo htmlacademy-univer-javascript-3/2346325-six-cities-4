@@ -1,29 +1,17 @@
 import { useEffect, useRef } from 'react';
-import { Offer } from '../../types/offers';
-import useMap from '../../hooks/use-map';
 import { Icon, Marker } from 'leaflet';
+import useMap from '../../hooks/use-map';
 import { City } from '../../types/city';
 import 'leaflet/dist/leaflet.css';
+import { Offer } from '../../types/offers';
 
 type MapProps = {
-  offers: Offer[];
   city: City;
-  selectedOffer: Offer | undefined;
-};
+  points: Offer[];
+  selectedPoint: Offer | null;
+}
 
-const defaultCustomIcon = new Icon({
-  iconUrl: 'img/pin.svg',
-  iconSize: [28, 40],
-  iconAnchor: [20, 40],
-});
-
-const currentCustomIcon = new Icon({
-  iconUrl: 'img/pin-active.svg',
-  iconSize: [28, 40],
-  iconAnchor: [20, 40],
-});
-
-export function Map({offers, selectedOffer, city}: MapProps){
+function Map({city, points, selectedPoint}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
   const markersRef = useRef<Marker[]>([]);
@@ -33,31 +21,44 @@ export function Map({offers, selectedOffer, city}: MapProps){
       markersRef.current.forEach((marker) => map.removeLayer(marker));
       markersRef.current = [];
 
-      offers
-        .filter((offer) => offer !== selectedOffer)
-        .forEach((offer) => {
+      const defaultIcon = new Icon({
+        iconUrl: 'img/pin.svg',
+        iconSize: [40, 40],
+        iconAnchor: [20, 40],
+      });
+
+      const activeIcon = new Icon({
+        iconUrl: 'img/pin-active.svg',
+        iconSize: [40, 40],
+        iconAnchor: [20, 40],
+      });
+
+      points
+        .filter((point) => point !== selectedPoint)
+        .forEach((point) => {
           const marker = new Marker({
-            lat: offer.location.latitude,
-            lng: offer.location.longitude,
-          }, {icon: defaultCustomIcon}).addTo(map);
+            lat: point.location.latitude,
+            lng: point.location.longitude,
+          }, {icon: defaultIcon}).addTo(map);
           markersRef.current.push(marker);
         });
 
-      if (selectedOffer) {
+      if (selectedPoint) {
         const selectedMarker = new Marker({
-          lat: selectedOffer.location.latitude,
-          lng: selectedOffer.location.longitude,
-        }, {icon: currentCustomIcon}).addTo(map);
+          lat: selectedPoint.location.latitude,
+          lng: selectedPoint.location.longitude,
+        }, {icon: activeIcon}).addTo(map);
         markersRef.current.push(selectedMarker);
         map.setView({
-          lat: selectedOffer.location.latitude,
-          lng: selectedOffer.location.longitude
-        }, selectedOffer.location.zoom);
+          lat: selectedPoint.location.latitude,
+          lng: selectedPoint.location.longitude
+        }, selectedPoint.location.zoom);
       }
     }
 
-  }, [map, offers, selectedOffer]);
-
+  }, [map, points, selectedPoint]);
 
   return <div style={{height: '100%'}} ref={mapRef}></div>;
 }
+
+export default Map;

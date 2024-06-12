@@ -1,6 +1,7 @@
 import { useAppSelector } from '../../hooks';
 import { getSelectedCity } from '../../store';
 import { City } from '../../types/city';
+import { Link } from 'react-router-dom';
 
 type CitiesElementProps = {
   city: City;
@@ -14,14 +15,14 @@ function CitiesElement ({city, onCityChange}: CitiesElementProps): JSX.Element {
       onCityChange(city);
     }}
     >
-      <a className={
+      <Link className={
         `locations__item-link
         tabs__item
         ${useAppSelector(getSelectedCity) === city ? 'tabs__item--active' : ''}`
-      } href="#"
+      } to="#"
       >
         <span>{city.name}</span>
-      </a>
+      </Link>
     </li>
   );
 }
